@@ -6,6 +6,8 @@ SET header_file_glad="D:\libraries\glad\include"
 SET lib_file_glfw3="D:\libraries\glfw-3.3.8\build\x64\lib\glfw3.lib"
 SET glad_main_file="D:\libraries\glad\src\glad.c"
 SET glm_header_files="D:\libraries\glm"
+SET glew_header_files="D:\libraries\glew-2.1.0\include"
+SET glew_lib_files="D:\libraries\glew-2.1.0\lib\Release\x64\glew32s.lib"
 
 REM Go to build folder - if not exist, create it
 
@@ -20,8 +22,9 @@ pushd build
   /Fe:"iso-trade"^
   ../src/iso_trade.cpp^
   %glad_main_file%^
-  /I %header_file_glfw3% /I%header_file_glad% /I%glm_header_files%^
-  OpenGL32.lib User32.lib gdi32.lib Shell32.lib %lib_file_glfw3%
+  /I%header_file_glfw3% /I%header_file_glad% /I%glm_header_files% /I%glew_header_files%^
+  /link /NODEFAULTLIB:MSVCRT^
+  OpenGL32.lib User32.lib gdi32.lib Shell32.lib %lib_file_glfw3% %glew_lib_files%
 
 popd
 
