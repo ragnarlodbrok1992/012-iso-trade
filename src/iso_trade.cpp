@@ -1,9 +1,5 @@
 #include <stdio.h>
 
-// #define GLEW_USE_STATIC_LIBS
-// #define GLEW_STATIC
-// #define GLFW_STATIC
-
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -17,6 +13,60 @@
 // Static pointers to stuff
 static GLFWwindow* window = NULL;
 
+/**
+ * Shaders code as static strings
+ */
+
+/**
+ * Shader loading function
+ */
+
+GLuint load_shaders(const char* vertex_source, const char* fragment_source) {
+  GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
+  GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+
+  GLuint program_id = glCreateProgram();
+
+  GLint result = GL_FALSE;
+  int info_log_length;
+  
+  // Compile vertex shader
+  glShaderSource(vertex_shader_id, 1, &vertex_source, NULL);
+  glCompileShader(vertex_shader_id);
+
+  // Check vertex shader for errors
+  glGetShaderiv(vertex_shader_id, GL_COMPILE_STATUS, &result);
+  glGetShaderiv(vertex_shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
+  if (info_log_length > 0) {
+    GLchar vertex_shader_error_message[512];
+    glGetShaderInfoLog(vertex_shader_id, info_log_length, NULL, &vertex_shader_error_message[0]);
+    printf("%s\n", &vertex_shader_error_message[0]);
+  }
+
+  // Compile fragment shader
+  glShaderSource(fragment_shader_id, 1, &fragment_source, NULL);
+  glCompileShader(fragment_shader_id);
+
+  // Check fragment shader for errors
+  glGetShaderiv(fragment_shader_id, GL_COMPILE_STATUS, &result);
+  glGetShaderiv(fragment_shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
+  if (info_log_length > 0) {
+    GLchar fragment_shader_error_message[512];
+    glGetShaderInfoLog(fragment_shader_id, info_log_length, NULL, &fragment_shader_error_message[0]);
+    printf("%s\n", &fragment_shader_error_message[0]);
+  }
+
+  // Link the program
+  glAttachShader(program_id, vertex_shader_id);
+  glAttachShader(program_id, fragment_shader_id);
+  glLinkProgram(program_id);
+
+  // Check the program
+
+  // Cleanup - detach and delete shaders - they are no longer needed since they are now part of the program
+  
+  return program_id;
+}
 
 /**
  * Main function - some code taken from: http://github.com/opengl-tutorials/ogl/blob/master/tutorial01_first_window/tutorial01.cpp
