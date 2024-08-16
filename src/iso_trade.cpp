@@ -237,9 +237,6 @@ int main(int argc, char** argv) {
   // Ensure we can capture the escape key being pressed below
   glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-  // Dark blue background
-  glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
   // Some enablement
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
@@ -276,6 +273,11 @@ int main(int argc, char** argv) {
   GLuint vertex_buffer;
   GLuint color_buffer;
 
+  printf("colored_cube_vertex_buffer_data: %p\n", colored_cube_vertex_buffer_data);
+  printf("colored_cube_color_buffer_data:  %p\n", colored_cube_color_buffer_data);
+  printf("colored_cube_vertex_ sizeof:     %zu\n", sizeof(colored_cube_vertex_buffer_data));
+  printf("colored_cube_color_  sizeof:     %zu\n", sizeof(colored_cube_color_buffer_data));
+
   glGenBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(colored_cube_vertex_buffer_data), colored_cube_vertex_buffer_data, GL_STATIC_DRAW);
@@ -294,7 +296,10 @@ int main(int argc, char** argv) {
   // Main loop
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
     // Clear the screen
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // GL_DEPTH_BUFFER_BIT IS SUPER FUCKIN IMPORTANT HERE
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+    // printf("Main loop\n");
 
     // Drawing colored cube
     // 1. Use shader program
@@ -320,7 +325,7 @@ int main(int argc, char** argv) {
       GL_FLOAT,  // type
       GL_FALSE,  // normalized?
       0,         // stride
-      (void*)0  // array buffer offset
+      nullptr  // array buffer offset
         );
 
     // Enable data from buffer to shader - color
@@ -332,7 +337,7 @@ int main(int argc, char** argv) {
       GL_FLOAT,  // type
       GL_FALSE,  // normalized?
       0,         // stride
-      (void*)0  // array buffer offset
+      nullptr  // array buffer offset
         );
 
     // Draw call
