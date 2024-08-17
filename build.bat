@@ -21,8 +21,14 @@ pushd build
   /std:c++17^
   /Fe:"iso-trade"^
   ../src/iso_trade.cpp^
+  ../src/camera/camera.cpp^
   %glad_main_file%^
-  /I%header_file_glfw3% /I%header_file_glad% /I%glm_header_files% /I%glew_header_files%^
+  /I../src^
+  /I../src/camera^
+  /I%header_file_glfw3%^
+  /I%header_file_glad%^
+  /I%glm_header_files%^
+  /I%glew_header_files%^
   /link /NODEFAULTLIB:MSVCRT^
   OpenGL32.lib User32.lib gdi32.lib Shell32.lib %lib_file_glfw3% %glew_lib_files%
 

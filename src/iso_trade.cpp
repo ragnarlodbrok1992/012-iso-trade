@@ -6,6 +6,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// Local engine includes
+#include <camera/camera.hpp>
+
 // Resolutions (16/9 ratio)
 #define RESOLUTION_WIDTH 1600
 #define RESOLUTION_HEIGHT 900
