@@ -253,6 +253,9 @@ int main(int argc, char** argv) {
   // CAMERA STUFF - PROJECTION MATRICIES
   // @TODO - move FOV and RATIO to different place, you know which is which, also near and far as inside parameters of game
   glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+  // @TODO - change camera to be it's own structure initialized in camera.cpp
+  //         and then passed to the render function
+  // @TODO - camera will always have a position and most importantly a direction where to look - a unit vector straight ahead
   glm::mat4 view = glm::lookAt(
       glm::vec3(4, 3, -3), // Camera pos
       glm::vec3(0, 0, 0),  // Where to look at
