@@ -296,8 +296,17 @@ int main(int argc, char** argv) {
   printf("vertex_buffer:     %i\n", vertex_buffer);
   printf("color_buffer:      %i\n", color_buffer);
 
+  // Time variables
+  double delta_time = 0.0f;
+
   // Main loop
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
+    // Calculate delta time
+    double frame_start_time = glfwGetTime();
+    // printf("Frame start time: %f\n", frame_start_time);
+
+    // Gather input
+
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // GL_DEPTH_BUFFER_BIT IS SUPER FUCKIN IMPORTANT HERE
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -353,6 +362,11 @@ int main(int argc, char** argv) {
     // Swap buffers
     glfwSwapBuffers(window);
     glfwPollEvents();
+
+    // End of frame time
+    double frame_end_time = glfwGetTime();
+    delta_time = frame_end_time - frame_start_time;
+    // printf("Delta time: %f\n", delta_time);
   }
 
   // Cleanup VBO and shader
