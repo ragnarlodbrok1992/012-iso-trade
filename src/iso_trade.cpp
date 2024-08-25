@@ -267,6 +267,12 @@ int main(int argc, char** argv) {
   camera->camera_look_at = glm::vec3(0, 0, 0);
   camera->camera_up_vector = glm::vec3(0, 1, 0);
 
+  glm::mat4 view = glm::lookAt(
+    camera->camera_pos, // Camera pos
+    camera->camera_look_at,  // Where to look at
+    camera->camera_up_vector   // Camera up vector
+      );
+
   calculate_camera_front(camera);
 
   // Preparing MVP matrix
@@ -276,11 +282,6 @@ int main(int argc, char** argv) {
   //     glm::vec3(0, 1, 0)   // Camera up vector
   //     );
 
-  glm::mat4 view = glm::lookAt(
-    camera->camera_pos, // Camera pos
-    camera->camera_look_at,  // Where to look at
-    camera->camera_up_vector   // Camera up vector
-      );
 
   glm::mat4 model = glm::mat4(1.0f);
   glm::mat4 MVP = projection * view * model;
