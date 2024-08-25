@@ -16,6 +16,7 @@
 
 // Static pointers to stuff
 static GLFWwindow* window = NULL;
+static Camera* camera = NULL;
 
 /**
  * Static data for colored cube
@@ -256,11 +257,31 @@ int main(int argc, char** argv) {
   // @TODO - change camera to be it's own structure initialized in camera.cpp
   //         and then passed to the render function
   // @TODO - camera will always have a position and most importantly a direction where to look - a unit vector straight ahead
+
+  // Preparing CAMERA object
+  // @TODO - calculate camera_front value
+
+  camera = (Camera*) malloc(sizeof(Camera)); // Yeah, I know, I know, I know - and I don't care, works for now
+
+  camera->camera_pos = glm::vec3(4, 3, -3);
+  camera->camera_look_at = glm::vec3(0, 0, 0);
+  camera->camera_up_vector = glm::vec3(0, 1, 0);
+
+  calculate_camera_front(camera);
+
+  // Preparing MVP matrix
+  // glm::mat4 view = glm::lookAt(
+  //     glm::vec3(4, 3, -3), // Camera pos
+  //     glm::vec3(0, 0, 0),  // Where to look at
+  //     glm::vec3(0, 1, 0)   // Camera up vector
+  //     );
+
   glm::mat4 view = glm::lookAt(
-      glm::vec3(4, 3, -3), // Camera pos
-      glm::vec3(0, 0, 0),  // Where to look at
-      glm::vec3(0, 1, 0)   // Camera up vector
+    camera->camera_pos, // Camera pos
+    camera->camera_look_at,  // Where to look at
+    camera->camera_up_vector   // Camera up vector
       );
+
   glm::mat4 model = glm::mat4(1.0f);
   glm::mat4 MVP = projection * view * model;
 
@@ -380,6 +401,9 @@ int main(int argc, char** argv) {
 
   // Close OpenGL window and terminate GLFW
   glfwTerminate();
+
+  // Deallocate camera
+  free(camera);
 
   printf("All went well, goodbye!\n");
   return 0;

@@ -11,5 +11,16 @@
  * Yaw can be done indefinitely, but pitch only 90 degrees up and down. No rolling, we won't fly any planes in this game.
  */
 
+typedef struct {
+  glm::vec3 camera_pos;
+  glm::vec3 camera_front; // Unit vector point in the direction where camera is looking
+  glm::vec3 camera_up_vector; // Should be 0, 1, 0 for the whole game, we do not roll ever.
+  glm::vec3 camera_right_vector; // We will have up, right and front of the camera
+
+  glm::vec3 camera_look_at; // I don't know if we should keep it here
+} Camera;
+
+void calculate_camera_front(Camera* camera);
+
 
 #endif // _H_CAMERA
